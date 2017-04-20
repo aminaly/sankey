@@ -11,6 +11,8 @@
 </head>
 
 <body>
+
+<div id="sankeydiv" style="width: 500px; height: 500px; border: 1px solid grey"></div>
 <script>
 
   Vizabi.Component.extend('sankeycomponent', {
@@ -29,9 +31,14 @@
         {name: "marker", type: "model"}
       ];
 
+      var _this = this;
+
       //bind the function update() to the change of time value in the model
       this.model_binds = {
         "change:time.value": function (evt) {
+
+          if(!_this.readyOnce) {return;}
+
           //fetch the time from the model and update the text on screen
           _this.time = _this.model.time.value;
           _this.redraw();
@@ -43,7 +50,22 @@
 
     },
 
+    readyOnce: function() {
+      this.element = d3.select(this.element);
+
+    },
+
     redraw: function() {
+      var _this = this;
+
+      (function(time) { // isolate timestamp
+        _this.model.marker.getFrame(time, (frame, time) => {
+          console.log(frame);
+          var elements = _this.element.select("svg").selectAll("text").data(frame.size);
+          elements.enter().append("text").text(())
+      });
+
+      })(_this.model.time.value);
       console.log("Hello");
     }
 
@@ -51,51 +73,54 @@
 
   Vizabi.Tool.extend('sankey', {
 
-  init: function(placeholder, external_model) {
+    init: function(placeholder, external_model) {
 
-  this.name = "sankey";
+      this.name = "sankey";
 
-  this.components = [{
-  component: Vizabi.Component.get("sankeycomponent"),
-  placeholder: ".vzb-tool-viz",
-  model: ["state.time", "state.entities", "state.marker"]
-  }, {
-  component: Vizabi.Component.get("timeslider"),
-  placeholder: ".vzb-tool-timeslider"
-  model: ["state.time", "state.entities", "state.marker", "ui"]
-  } ];
+      this.components = [{
+        component: Vizabi.Component.get("sankeycomponent"),
+        placeholder: ".vzb-tool-viz",
+        model: ["state.time", "state.entities", "state.marker"]
+      }, {
+        component: Vizabi.Component.get("timeslider"),
+        placeholder: ".vzb-tool-timeslider",
+        model: ["state.time", "state.entities", "state.marker", "ui"]
+      } ];
 
-  this._super(placeholder, external_model);
-  },
+      this._super(placeholder, external_model);
+    },
 
-  default_model: {
-  state: {
-  time: {
-    dim: "year"
-  },
-  entities: {
-    dim:"phase_from"
-  },
-  marker: {
-  color: {
-    use:"indicator",
-    which:"amount"
-  },
-  size: {
-    use:"indicator",
-    which:"amount"
-  }
-  }
-  },
-  locale: {id:"em"},
-  ui: {},
-  data: {
-    reader:"csv",
-    path:"ddf--datapoints--amount--by-phase_from--phase_to--year.csv"
-  }
-  }
+    default_model: {
+      state: {
+        time: {
+          dim: "year"
+        },
+        entities: {
+          dim:"phase_from"
+        },
+        marker: {
+          space: ["entities", "time"],
+          color: {
+            use:"indicator",
+            which:"amount"
+          },
+          size: {
+            use:"indicator",
+            which:"amount"
+          }
+        }
+      },
+      locale: {id:"en"},
+      ui: {},
+      data: {
+        reader:"csv",
+        path:"ddf--datapoints--amount--by--phase_from--phase_to--year.csv"
+      }
+    }
 
   });
+
+  Vizabi("sankey", document.getElementById("sankeydiv"));
 </script>
 </body>
 
