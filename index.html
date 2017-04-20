@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Gapminder Tools Offline export</title>
+  <script src="libs/d3.min.js"></script>
+  <link href="libs/vizabi.css" rel="stylesheet" type="text/css">
+  <script src="libs/vizabi.js"></script>
+  <script src="libs/vizabi-ddfcsv-reader.js"></script>
+</head>
+
+<body>
+<script>
+
+  Vizabi.Component.extend('sankeycomponent', {
+    init: function(config, context) {
+      var _this = this;
+
+      this.name = 'sankeycomponent';
+
+      //provide the template as a string
+      this.template = '<div class="vzb-sankey"><svg class="vzb-sankey-svg"></svg></div>';
+
+      //define expected models for this component
+      this.model_expects = [
+        {name: "time", type: "time"},
+        {name: "entities", type: "entities"},
+        {name: "marker", type: "model"}
+      ];
+
+      //bind the function update() to the change of time value in the model
+      this.model_binds = {
+        "change:time.value": function (evt) {
+          //fetch the time from the model and update the text on screen
+          _this.time = _this.model.time.value;
+          _this.redraw();
+        }
+      };
+
+      //call the prototype constructor of the component
+      this._super(config, context);
+
+    },
+
+    redraw: function() {
+      console.log("Hello");
+    }
+
+  });
+
+  Vizabi.Tool.extend('sankey', {
+
+  init: function(placeholder, external_model) {
+
+  this.name = "sankey";
+
+  this.components = [{
+  component: Vizabi.Component.get("sankeycomponent"),
+  placeholder: ".vzb-tool-viz",
+  model: ["state.time", "state.entities", "state.marker"]
+  }, {
+  component: Vizabi.Component.get("timeslider"),
+  placeholder: ".vzb-tool-timeslider"
+  model: ["state.time", "state.entities", "state.marker", "ui"]
+  } ];
+
+  this._super(placeholder, external_model);
+  },
+
+  default_model: {
+  state: {
+  time: {
+    dim: "year"
+  },
+  entities: {
+    dim:"phase_from"
+  },
+  marker: {
+  color: {
+    use:"indicator",
+    which:"amount"
+  },
+  size: {
+    use:"indicator",
+    which:"amount"
+  }
+  }
+  },
+  locale: {id:"em"},
+  ui: {},
+  data: {
+    reader:"csv",
+    path:"ddf--datapoints--amount--by-phase_from--phase_to--year.csv"
+  }
+  }
+
+  });
+</script>
+</body>
+
+</html>
