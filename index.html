@@ -56,13 +56,12 @@
     },
 
     redraw: function() {
-      var _this = this;
+      const _this = this;
 
       (function(time) { // isolate timestamp
         _this.model.marker.getFrame(time, (frame, time) => {
-          console.log(frame);
-          var elements = _this.element.select("svg").selectAll("text").data(frame.size);
-          elements.enter().append("text").text(())
+          const elements =  d3.select(_this.element).select("svg").selectAll("text").data(Object.keys(frame.size));
+          elements.enter().append("text").text((d)=>{d; console.log(d)});
       });
 
       })(_this.model.time.value);
