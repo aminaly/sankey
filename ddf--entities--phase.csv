@@ -1,28 +1,24 @@
 phase,name
-"Coal, peat and oil shale",Coal and Shale
-"Crude,NGL and feedstocks",Crude and  Feedstocks
-Oil products,Oil
+"Coal, peat and oil shale",
+"Crude,NGL and feedstocks",Crude Oil
+Oil products,Oil Products 
 Natural gas,Natural Gas
 Nuclear,Nuclear
-Renewables and waste,Renewables
+Renewables and waste,Renewables and Waste
 Electricity,Electricity
 Heat,Heat
-Total,Total
-Fossil Fuels,Fossil Fuel
-Renewable sources,Renewable Source
-Production (ktoe),Production
-Imports (ktoe),Import
-Exports (ktoe),Export
-Total primary energy supply (ktoe),Total Energy Supply
-Electricity plants (ktoe),Electricity Plant
-CHP plants (ktoe),CHP Plant
-Heat plants (ktoe),Heat Plant
-"Oil refineries, transformation (ktoe)",Oil Refineries
-Total final consumption (ktoe),Total Consumption
-Industry (ktoe),Industry
-Transport (ktoe),Transport
-Other (ktoe),Other
-of which: Residential (ktoe),Residential
-of which: Commerce and public services (ktoe),Commerce
+Fossil Fuels,Fossil Fuls
+Renewable sources,Renewable Resources 
+CHP plants (ktoe),CHP Plants
 Electricity output (GWh),Electricity Output
-Total CO2 emissions - Fuel Combustion (Mt of CO2),CO2 Emissions
+Electricity plants (ktoe),Electricity Plants
+Exports (ktoe),Exports
+Heat plants (ktoe),Heat 
+Imports (ktoe),Imports
+Industry (ktoe),Industry
+of which: Commerce and public services (ktoe),Commerce
+of which: Residential (ktoe),Residential
+"Oil refineries, transformation (ktoe)",Oil Refineries
+Other (ktoe),Other
+Production (ktoe),Production
+Transport (ktoe),Transport

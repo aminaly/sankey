@@ -12,7 +12,7 @@
 
 <body>
 
-<div id="sankeydiv" style="width: 500px; height: 500px; border: 1px solid grey"></div>
+<div id="sankeydiv" style="width: 75%; height: 75%; border: 1px solid grey"></div>
 <script>
 
   Vizabi.Component.extend('sankeycomponent', {
@@ -22,7 +22,8 @@
       this.name = 'sankeycomponent';
 
       //provide the template as a string
-      this.template = '<div class="vzb-sankey"><svg class="vzb-sankey-svg"></svg></div>';
+      this.template = "<div class='vzb-sankey' ><svg style='width: 500px; height: 500px' " +
+          "class='vzb-sankey-svg'></svg></div>";
 
       //define expected models for this component
       this.model_expects = [
@@ -57,14 +58,34 @@
 
     redraw: function() {
       const _this = this;
+      let svg = d3.select(this.element).select("svg");
+      let circles = svg.selectAll("circle");
+      let  texts = svg.selectAll("text");
 
-      (function(time) { // isolate timestamp
+      let flows = svg.selectAll("line");
+
+
+     (function(time) {
         _this.model.marker.getFrame(time, (frame, time) => {
-          const elements =  d3.select(_this.element).select("svg").selectAll("text").data(Object.keys(frame.size));
-          elements.enter().append("text").text((d)=>{d; console.log(d)});
-      });
+          circles = circles.data(Object.values(frame.size));
+          texts = texts.data(Object.keys(frame.size));
+          circles.enter().append("circle").attr("r", (d)=>{return d / 100000;})
+          .attr("cx", (d, i)=>{return i * Math.random() * 50;})
+          .attr("cy", (d, i)=>{return i * Math.random() * 50;});
+          texts.enter().append("text").text((d)=>{return d;})
+          .attr("cx", 100).attr("cy", (d, i)=> {return (i*10) + 100});
+        });
 
       })(_this.model.time.value);
+
+      (function(paths) {
+        _this.model.entities.getFrame(time, (frame, time) => {
+          data
+        })
+      })
+
+     //d3.select(this.element).select()
+     circles.enter().attr("r", "10").attr("stroke-width", "4");
       console.log("Hello");
     }
 
