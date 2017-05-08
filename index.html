@@ -62,8 +62,6 @@
       let circles = svg.selectAll("circle");
       let  texts = svg.selectAll("text");
 
-      let flows = svg.selectAll("line");
-
 
      (function(time) {
         _this.model.marker.getFrame(time, (frame, time) => {
@@ -77,12 +75,6 @@
         });
 
       })(_this.model.time.value);
-
-      (function(paths) {
-        _this.model.entities.getFrame(time, (frame, time) => {
-          data
-        })
-      })
 
      //d3.select(this.element).select()
      circles.enter().attr("r", "10").attr("stroke-width", "4");
